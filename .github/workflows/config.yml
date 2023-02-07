@@ -1,0 +1,62 @@
+name: SSE CI/CD
+on: [push]
+jobs:
+  style_check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install clang-format
+      run: sudo apt update && sudo apt install -y clang-format
+
+    - name: Run clang-format
+      run: |
+        clang-format -i tests/*.cpp --dry-run --Werror
+        clang-format -i src/*.cpp --dry-run --Werror
+  
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Install dependencies    
+      run: |
+        sudo apt update
+        sudo apt install -y cmake
+        sudo apt install -y make
+        sudo apt install -y libeigen3-dev
+        sudo apt install -y libyaml-cpp-dev
+        sudo apt install -y libboost-all-dev
+    - name: Create build directory
+      run: mkdir build
+    - name: Configure build
+      run: cd build && cmake ..
+    - name: Build
+      run: cd build && make -j4
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y cmake
+        sudo apt install -y make
+        sudo apt install -y libeigen3-dev
+        sudo apt install -y libyaml-cpp-dev
+        sudo apt install -y libboost-all-dev
+    - name: Create build directory
+      run: mkdir build
+    - name: Configure build
+      run: cd build && cmake ..
+    - name: Build
+      run: cd build && make -j4
+    - name: "run tests"
+      run: |
+          cd build && make test
+#test
