@@ -2,7 +2,7 @@
 #include <Eigen/Dense>
 #include <boost/test/unit_test.hpp>
 #include "matrixIO.hpp"
-
+ 
 using namespace Eigen;
 
 struct matrixIOFixture {
@@ -10,7 +10,9 @@ struct matrixIOFixture {
   {
     A         = MatrixXd(3, 3);
     expectedA = MatrixXd(3, 3);
-    expectedA << 0.680375, 0.59688, -0.329554, -0.211234, 0.823295, 0.536459, 0.566198, -0.604897, -0.444451;
+    expectedA << 0.680375, 0.59688, -0.329554, -0.211234, 0.823295, 
+    0.536459, 0.566198, -0.604897,
+      -0.444451;
   }
 
   MatrixXd expectedA;
