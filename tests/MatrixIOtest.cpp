@@ -2,7 +2,7 @@
 #include <Eigen/Dense>
 #include <boost/test/unit_test.hpp>
 #include "matrixIO.hpp"
- 
+
 using namespace Eigen;
 
 struct matrixIOFixture {
